@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Meneger</title>
+    <link rel="stylesheet" href="styl.css">
+</head>
+<body onload="init()">
+        <h1>Password manager</h1>
+        <input type="text" name="" id="login"> 
+        <input type="password" name="" id="password">
+        <button onclick="addPassword()">Dodaj Login i Hasło</button>
+        <p>Loginy I hasła</p>
+        <div id="loginList"></div> 
+        <div id="passwordList"></div>
+    <script>
+
+        function init(){
+            let loginList = window.localStorage.getItem('loginList');
+            let passwordList = window.localStorage.getItem('passwordlist');
+            if(passwordList && loginList == null){
+                loginList = Array();
+                passwordList = Array();
+                window.localStorage.setItem('loginList',
+                                                JSON.stringify(loginList));
+                window.localStorage.setItem('passwordList',
+                                                JSON.stringify(passwordList));
+            }
+
+            showTasks();
+        }
+
+        function addPassword(){
+            let login = document.getElementById('login').value;
+            let password = document.getElementById('password').value;
+            let loginList = JSON.parse(window.localStorage.getItem('loginList'));
+            let passwordList = JSON.parse(window.localStorage.getItem('passwordList'));
+            loginList.push(login);
+            passwordList.push(password);
+            window.localStorage.setItem('loginList', JSON.stringify(loginList));
+            window.localStorage.setItem('PasswordList', JSON.stringify(passwordList));
+            showPassword();
+            showLogin();
+        }
+
+        function showPassword(){
+            let passwordList = document.getElementById('passwordList');
+            passwordList.innerHTML = JSON.parse(window.localStorage.getItem('password'));
+        }
+        function showLogin(){
+            let loginList = document.getElementById('loginList');
+            loginList.innerHTML = JSON.parse(window.localStorage.getItem('login'));
+        }
+    </script>
+</body>
+</html>
